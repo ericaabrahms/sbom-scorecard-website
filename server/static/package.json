@@ -1,0 +1,15 @@
+{
+  "name": "sbom-scorecard-website",
+  "version": "1.0.0",
+  "description": "a website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Erica Abrahms",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
+  }
+}
