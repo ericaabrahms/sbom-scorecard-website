@@ -3,6 +3,11 @@
     <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
   </head>
   <body>
-    <h1>UNICORN FARTS!!!</h1>
+    <h1>So you want a score card?</h1>
+    <form method="POST" action="/score" enctype="multipart/form-data">
+      <label for="file-upload">Upload your json</label>
+      <input id="file-upload" name="json-file" type="file" accept="application/json"/>
+      <input type="submit"/>
+    </form>
   </body>
 </html>
