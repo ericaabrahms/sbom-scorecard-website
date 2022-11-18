@@ -1,6 +1,4 @@
 from flask import Flask, render_template, request, Response
-with open('static/test_json.json') as f:
-  json_file = "".join(f.readlines())
 
 app = Flask(__name__)
 
@@ -10,6 +8,33 @@ def hello_world():
 
 @app.post("/score")
 def score():
+  json_file = '''{
+  "Compliance": {
+    "Ratio": 1,
+    "Reasoning": "",
+    "MaxPoints": 25
+  },
+  "PackageIdentification": {
+    "Ratio": 0.5,
+    "Reasoning": "100% have purls and 0% have CPEs",
+    "MaxPoints": 20
+  },
+  "PackageVersions": {
+    "Ratio": 1,
+    "Reasoning": "",
+    "MaxPoints": 20
+  },
+  "PackageLicenses": {
+    "Ratio": 0,
+    "Reasoning": "",
+    "MaxPoints": 20
+  },
+  "Total": {
+    "Ratio": 0.64705884,
+    "Reasoning": "",
+    "MaxPoints": 85
+  }
+}'''
   return Response(json_file, mimetype='application/json')
 
   # 1. Serve static files
