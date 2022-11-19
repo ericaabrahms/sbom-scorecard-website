@@ -130,3 +130,6 @@ dmypy.json
 
 # node_modules
 /server/static/node_modules
+
+# temp files
+/temp_files

@@ -1,4 +1,14 @@
+import os
 from flask import Flask, render_template, request, Response
+from werkzeug.utils import secure_filename
+
+
+UPLOAD_FOLDER = '../temp_files'
+ALLOWED_EXTENSIONS = {'json'}
+
+def allowed_file(filename):
+    return '.' in filename and \
+          filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 app = Flask(__name__)
 
@@ -35,7 +45,11 @@ def score():
     "MaxPoints": 85
   }
 }'''
-  return Response(json_file, mimetype='application/json')
+
+  file = request.files['json-file']
+  my_upload = "".join(file.readlines())
+  print(my_upload)
+  return Response(my_upload, mimetype='application/json')
 
   # 1. Serve static files
   # 2. Fake JSON payload
