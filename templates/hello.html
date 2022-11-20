@@ -2,12 +2,25 @@
   <head>
     <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
   </head>
-  <body>
-    <h1>So you want a score card?</h1>
-    <form method="POST" action="/score" enctype="multipart/form-data">
-      <label for="file-upload">Upload your json</label>
-      <input id="file-upload" name="json-file" type="file" accept="application/json"/>
-      <input type="submit"/>
-    </form>
+  <body class="h-24 bg-gradient-to-r from-indigo-700 to-fuchsia-400">
+    <header class="bg-indigo-900 py-3 grid grid-cols-12">
+      <h1 class="text-white text-3xl col-span-10 col-start-2">SBOM Scorecard</h1>
+    </header>
+    <div class="grid grid-cols-12">
+      <div class="col-span-8 col-start-3">
+        <div class="rounded bg-white">
+          <form class="w-full p-4 mt-20" method="POST" action="/score" enctype="multipart/form-data">
+            <label class="block text-gray-600 text-2xl font-bold mb-5" for="file-upload">Upload your SBOM JSON file</label>
+            <div class="flex justify-between">
+              <input id="file-upload" name="json-file" type="file" accept="application/json"/>
+              <button class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
+                Score Me!
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
