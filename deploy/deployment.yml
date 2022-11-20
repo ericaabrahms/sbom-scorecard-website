@@ -47,6 +47,8 @@ kind: Service
 metadata:
   annotations:
     kubernetes.digitalocean.com/load-balancer-id: c54cf5d6-9170-42d1-a4e9-3eb2844b694a
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
+    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "aa0a6503-5c54-4d3e-bfb7-767f1054f61f"
   creationTimestamp: "2022-11-20T04:15:08Z"
   finalizers:
   - service.kubernetes.io/load-balancer-cleanup
@@ -68,7 +70,7 @@ spec:
   ipFamilyPolicy: SingleStack
   ports:
   - nodePort: 31994
-    port: 80
+    port: 443
     protocol: TCP
     targetPort: 8000
   selector:
