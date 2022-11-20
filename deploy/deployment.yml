@@ -58,7 +58,6 @@ metadata:
     app: ssc
   name: ssc
   namespace: default
-  resourceVersion: "17817"
   uid: 7e23dcf1-c36b-4b28-b439-ea4d41b91357
 spec:
   allocateLoadBalancerNodePorts: true
