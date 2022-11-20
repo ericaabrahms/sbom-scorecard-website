@@ -26,7 +26,7 @@ spec:
         app: ssc
     spec:
       containers:
-      - image: ghcr.io/ericaabrahms/sbom-scorecard-website:main
+      - image: <IMAGE>
         imagePullPolicy: Always
         name: sbom-scorecard-website
         resources: {}
