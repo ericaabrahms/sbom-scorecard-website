@@ -3,14 +3,11 @@ kind: Deployment
 metadata:
   annotations:
     deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2022-11-20T04:13:38Z"
   generation: 1
   labels:
     app: ssc
   name: ssc
   namespace: default
-  resourceVersion: "7229"
-  uid: 8d33b3c2-73c3-429e-b3b4-021e9e2f5452
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -25,7 +22,6 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: ssc
     spec:
@@ -46,19 +42,15 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"kubernetes.digitalocean.com/load-balancer-id":"c54cf5d6-9170-42d1-a4e9-3eb2844b694a"},"creationTimestamp":"2022-11-20T04:15:08Z","finalizers":["service.kubernetes.io/load-balancer-cleanup"],"labels":{"app":"ssc"},"name":"ssc","namespace":"default","resourceVersion":"8029","uid":"7e23dcf1-c36b-4b28-b439-ea4d41b91357"},"spec":{"allocateLoadBalancerNodePorts":true,"clusterIP":"10.245.237.147","clusterIPs":["10.245.237.147"],"externalTrafficPolicy":"Cluster","internalTrafficPolicy":"Cluster","ipFamilies":["IPv4"],"ipFamilyPolicy":"SingleStack","ports":[{"nodePort":31994,"port":80,"protocol":"TCP","targetPort":8000}],"selector":{"app":"ssc"},"sessionAffinity":"None","type":"LoadBalancer"}}
     kubernetes.digitalocean.com/load-balancer-id: c54cf5d6-9170-42d1-a4e9-3eb2844b694a
     service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
     service.beta.kubernetes.io/do-loadbalancer-certificate-id: "aa0a6503-5c54-4d3e-bfb7-767f1054f61f"
-  creationTimestamp: "2022-11-20T04:15:08Z"
   finalizers:
   - service.kubernetes.io/load-balancer-cleanup
   labels:
     app: ssc
   name: ssc
   namespace: default
-  uid: 7e23dcf1-c36b-4b28-b439-ea4d41b91357
 spec:
   allocateLoadBalancerNodePorts: true
   clusterIP: 10.245.237.147
