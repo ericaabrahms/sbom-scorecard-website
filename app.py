@@ -1,4 +1,4 @@
-import os
+import json, os
 from flask import Flask, render_template, request, Response
 from werkzeug.utils import secure_filename
 
@@ -46,10 +46,14 @@ def score():
   }
 }'''
 
-  file = request.files['json-file']
-  my_upload = "".join(file.readlines())
-  print(my_upload)
-  return Response(my_upload, mimetype='application/json')
+  # Note for Erica of the future:
+  # use request.files to get to uploaded file
+  # specifically, request.files('json-file')
+
+  score_data = json.loads(json_file)
+
+  return render_template('scorecard.html', score_data=score_data)
+  # return Response(json_file, mimetype='application/json')
 
   # 1. Serve static files
   # 2. Fake JSON payload

@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # node_modules
-/server/static/node_modules
+/static/node_modules
 
 # temp files
 /temp_files
