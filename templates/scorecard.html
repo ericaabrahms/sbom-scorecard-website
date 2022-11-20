@@ -2,8 +2,24 @@
   <head>
     <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
   </head>
-  <body>
-    <h1>Pegasus farts</h1>
+  <body class="h-24 bg-gradient-to-r from-indigo-700 to-fuchsia-400">
+    <header class="bg-indigo-900 py-3 grid grid-cols-12">
+      <h1 class="text-white text-3xl col-span-10 col-start-2">SBOM Scorecard</h1>
+    </header>
+    <div class="grid grid-cols-12">
+      <div class="col-span-8 col-start-3">
+        <div class="rounded bg-white mt-20">
+          {% for score_item, score_item_values in score_data.items() %}
+          <div>
+            <h3>{{score_item}}</h3>
+            <p>Ratio: {{score_item_values['Ratio']}}</p>
+            <p>Reasoning: {{score_item_values['Reasoning']}}</p>
+            <p>Max Points: {{score_item_values['MaxPoints']}}</p>
+          </div>
 
+          {% endfor %}
+        </div>
+      </div>
+    </div>
   </body>
 </html>
