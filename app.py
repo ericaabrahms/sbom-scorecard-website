@@ -25,24 +25,29 @@ def score():
     "MaxPoints": 25
   },
   "PackageIdentification": {
-    "Ratio": 0.5,
-    "Reasoning": "100% have purls and 0% have CPEs",
+    "Ratio": 0,
+    "Reasoning": "0% have purls and 0% have CPEs",
     "MaxPoints": 20
   },
   "PackageVersions": {
-    "Ratio": 1,
-    "Reasoning": "",
-    "MaxPoints": 20
-  },
-  "PackageLicenses": {
     "Ratio": 0,
     "Reasoning": "",
     "MaxPoints": 20
   },
-  "Total": {
-    "Ratio": 0.64705884,
+  "PackageLicenses": {
+    "Ratio": 1,
     "Reasoning": "",
-    "MaxPoints": 85
+    "MaxPoints": 20
+  },
+  "CreationInfo": {
+    "Ratio": 0,
+    "Reasoning": "No tool was used to create the sbom",
+    "MaxPoints": 15
+  },
+  "Total": {
+    "Ratio": 0.45,
+    "Reasoning": "",
+    "MaxPoints": 100
   }
 }'''
 
