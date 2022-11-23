@@ -32,6 +32,27 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+        env:
+          - name: SPACES_KEY
+            valueFrom:
+              name: spaces
+              key: key
+              optional: false
+          - name: SPACES_SECRET
+            valueFrom:
+              name: spaces
+              key: secret
+              optional: false
+          - name: SPACES_REGION
+            valueFrom:
+              name: spaces
+              key: region
+              optional: false
+          - name: SPACES_BUCKET
+            valueFrom:
+              name: spaces
+              key: bucket
+              optional: false
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
