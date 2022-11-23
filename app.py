@@ -77,10 +77,12 @@ def score():
 
   f = request.files['json-file']
 
+  print("saving")
   with TemporaryDirectory(f.filename) as d:
       outfile = f'{d}/{f.filename}'
       f.save(outfile)
       f.seek(0) # reset cursor back to beginning after writing it out
+      print("running cmd")
       output = run(
           f"./sbom-scorecard score {outfile} --outputFormat json",
           hide='out', # hide stdout
@@ -89,6 +91,7 @@ def score():
 
   the_json = normalize_json(b"".join(f.stream.readlines()))
   checksum = sha1(the_json).hexdigest()
+  print("pushing to spaces")
   client.put_object(
       Bucket=os.getenv('SPACES_BUCKET'),
       Key=f"{checksum}.json",
@@ -104,6 +107,7 @@ def score():
   # use request.files to get to uploaded file
   # specifically, request.files('json-file')
 
+  print("outputting")
   if output.ok:
     score_data = json.loads(output.stdout)
   else:
