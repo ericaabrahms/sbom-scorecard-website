@@ -70,7 +70,9 @@ def score():
 
 # Upload the file
   f = request.files['json-file']
-  the_json = b"".join(f.stream.readlines())
+
+  # normalize the loaded json.
+  the_json = json.dumps(json.loads(b"".join(f.stream.readlines())))
 
   client.put_object(
       Bucket=os.getenv('SPACES_BUCKET'),
