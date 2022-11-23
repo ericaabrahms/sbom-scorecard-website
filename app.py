@@ -24,6 +24,12 @@ def allowed_file(filename):
     return '.' in filename and \
           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def normalize_json(js: str):
+    return json.dumps(
+        json.loads(js),
+        ensure_ascii=False
+    ).encode('utf-8')
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -72,7 +78,7 @@ def score():
   f = request.files['json-file']
 
   # normalize the loaded json.
-  the_json = json.dumps(json.loads(b"".join(f.stream.readlines())))
+  the_json = normalize_json(b"".join(f.stream.readlines()))
 
   client.put_object(
       Bucket=os.getenv('SPACES_BUCKET'),
