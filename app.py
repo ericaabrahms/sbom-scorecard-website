@@ -75,7 +75,6 @@ def score():
   def add_spaces_to_name(name):
       return re.sub( r"([A-Z])", r" \1", name)
 
-  # Upload the file
   f = request.files['json-file']
 
   with TemporaryDirectory(f.filename) as d:
@@ -88,7 +87,6 @@ def score():
           warn=True, # don't throw exceptions on error
       )
 
-  # normalize the loaded json.
   the_json = normalize_json(b"".join(f.stream.readlines()))
   checksum = sha1(the_json).hexdigest()
   client.put_object(
