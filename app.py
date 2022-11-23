@@ -84,9 +84,7 @@ def score():
       Key=f"{sha1(the_json)}.json",
       Body=the_json,
       ACL='private',
-      Metadata={
-          'x-amz-meta-my-key': 'your-value'
-      }
+      Metadata={}
   )
 
   # Note for Erica of the future:
