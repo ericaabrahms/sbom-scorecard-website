@@ -1,4 +1,4 @@
-import json, os
+import json, os, boto3, botocore
 from flask import Flask, render_template, request, Response
 from werkzeug.utils import secure_filename
 
@@ -50,6 +50,26 @@ def score():
     "MaxPoints": 100
   }
 }'''
+
+# Upload the file
+
+  session = boto3.session.Session()
+  region = os.getenv('SPACES_REGION')
+  client = session.client('s3',
+      config=botocore.config.Config(s3={'addressing_style': 'virtual'}),
+      region_name=region,
+      endpoint_url=f'https://{region}.digitaloceanspaces.com',
+      aws_access_key_id=os.getenv('SPACES_KEY'),
+      aws_secret_access_key=os.getenv('SPACES_SECRET'))
+
+  client.put_object(Bucket=os.getenv('SPACES_BUCKET'),
+              Key='file.ext',
+              Body=b'The contents of the file.',
+              ACL='private',
+              Metadata={
+                  'x-amz-meta-my-key': 'your-value'
+              }
+            )
 
   # Note for Erica of the future:
   # use request.files to get to uploaded file

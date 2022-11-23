@@ -133,3 +133,5 @@ dmypy.json
 
 # temp files
 /temp_files
+
+.env
