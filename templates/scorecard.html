@@ -13,7 +13,7 @@
           {% for score_item, score_item_values in score_data.items() %}
           <div class="py-4">
             <h3 class="text-lg font-bold text-gray-600">{{score_item}}</h3>
-            <p>{{score_item_values['Ratio'] * score_item_values['MaxPoints']}} / {{ score_item_values['MaxPoints'] }}</p>
+            <p>{{ (score_item_values['Ratio'] * score_item_values['MaxPoints']) | round(10) | int}} / {{ score_item_values['MaxPoints'] }}</p>
             <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
               <div class="bg-indigo-600 h-2.5 rounded-full" style="width: {{ score_item_values['Ratio'] * 100 }}%"></div>
             </div>
