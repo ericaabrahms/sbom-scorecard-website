@@ -9,6 +9,7 @@ gunicorn = "*"
 boto3 = "*"
 python-dotenv = "*"
 botocore = "*"
+invoke = "*"
 
 [dev-packages]
 
