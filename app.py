@@ -73,8 +73,7 @@ def score():
   def add_spaces_to_name(name):
       return re.sub( r"([A-Z])", r" \1", name)
 
-
-# Upload the file
+  # Upload the file
   f = request.files['json-file']
 
   # normalize the loaded json.
