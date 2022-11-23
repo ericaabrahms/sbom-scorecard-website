@@ -1,4 +1,4 @@
-import json, os, boto3, botocore
+import json, os, boto3, botocore, re
 from flask import Flask, render_template, request, Response
 from werkzeug.utils import secure_filename
 
@@ -50,6 +50,9 @@ def score():
     "MaxPoints": 100
   }
 }'''
+  def add_spaces_to_name(name):
+      return re.sub( r"([A-Z])", r" \1", name)
+
 
 # Upload the file
   f = request.files['json-file']
@@ -79,7 +82,7 @@ def score():
 
   score_data = json.loads(json_file)
 
-  return render_template('scorecard.html', score_data=score_data)
+  return render_template('scorecard.html', score_data=score_data, add_spaces_to_name=add_spaces_to_name)
   # return Response(json_file, mimetype='application/json')
 
   # 1. Serve static files
