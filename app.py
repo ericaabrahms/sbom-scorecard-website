@@ -6,6 +6,19 @@ from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = '../temp_files'
 ALLOWED_EXTENSIONS = {'json'}
 
+
+session = boto3.session.Session()
+region = os.getenv('SPACES_REGION')
+client = session.client(
+    's3',
+    config=botocore.config.Config(s3={'addressing_style': 'virtual'}),
+    region_name=region,
+    endpoint_url=f'https://{region}.digitaloceanspaces.com',
+    aws_access_key_id=os.getenv('SPACES_KEY'),
+    aws_secret_access_key=os.getenv('SPACES_SECRET')
+)
+
+
 def allowed_file(filename):
     return '.' in filename and \
           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -57,15 +70,6 @@ def score():
 # Upload the file
   f = request.files['json-file']
   the_json = b"".join(f.stream.readlines())
-
-  session = boto3.session.Session()
-  region = os.getenv('SPACES_REGION')
-  client = session.client('s3',
-      config=botocore.config.Config(s3={'addressing_style': 'virtual'}),
-      region_name=region,
-      endpoint_url=f'https://{region}.digitaloceanspaces.com',
-      aws_access_key_id=os.getenv('SPACES_KEY'),
-      aws_secret_access_key=os.getenv('SPACES_SECRET'))
 
   client.put_object(Bucket=os.getenv('SPACES_BUCKET'),
               Key=f.filename,
