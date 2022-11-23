@@ -96,18 +96,23 @@ jobs:
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
 
       - name: Install doctl
+        if: ${{ github.event_name != 'pull_request' }}
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Update deployment file
+        if: ${{ github.event_name != 'pull_request' }}
         run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|ghcr.io/ericaabrahms/sbom-scorecard-website:sha-'${TAG}'|' $GITHUB_WORKSPACE/deploy/deployment.yml
 
       - name: Save DigitalOcean kubeconfig with short-lived credentials
+        if: ${{ github.event_name != 'pull_request' }}
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ssc-website
 
       - name: Deploy to DigitalOcean Kubernetes
+        if: ${{ github.event_name != 'pull_request' }}
         run: kubectl apply -f $GITHUB_WORKSPACE/deploy/deployment.yml
 
       - name: Verify deployment
+        if: ${{ github.event_name != 'pull_request' }}
         run: kubectl rollout status deployment/ssc
