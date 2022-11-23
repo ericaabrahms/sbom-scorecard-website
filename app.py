@@ -52,6 +52,8 @@ def score():
 }'''
 
 # Upload the file
+  f = request.files['json-file']
+  the_json = b"".join(f.stream.readlines())
 
   session = boto3.session.Session()
   region = os.getenv('SPACES_REGION')
@@ -63,8 +65,8 @@ def score():
       aws_secret_access_key=os.getenv('SPACES_SECRET'))
 
   client.put_object(Bucket=os.getenv('SPACES_BUCKET'),
-              Key='file.ext',
-              Body=b'The contents of the file.',
+              Key=f.filename,
+              Body=the_json,
               ACL='private',
               Metadata={
                   'x-amz-meta-my-key': 'your-value'
