@@ -85,7 +85,7 @@ def score():
       Key=f"{checksum}.json",
       ContentType="application/json",
       ChecksumAlgorithm='sha1',
-      ChecksumSha1=checksum,
+      ChecksumSHA1=checksum,
       Body=the_json,
       ACL='private',
       Metadata={}
