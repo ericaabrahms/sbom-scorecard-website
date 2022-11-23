@@ -1,4 +1,5 @@
 import json, os, boto3, botocore, re
+from hashlib import sha1
 from flask import Flask, render_template, request, Response
 from werkzeug.utils import secure_filename
 
@@ -71,14 +72,15 @@ def score():
   f = request.files['json-file']
   the_json = b"".join(f.stream.readlines())
 
-  client.put_object(Bucket=os.getenv('SPACES_BUCKET'),
-              Key=f.filename,
-              Body=the_json,
-              ACL='private',
-              Metadata={
-                  'x-amz-meta-my-key': 'your-value'
-              }
-            )
+  client.put_object(
+      Bucket=os.getenv('SPACES_BUCKET'),
+      Key=f"{sha1(the_json)}.json",
+      Body=the_json,
+      ACL='private',
+      Metadata={
+          'x-amz-meta-my-key': 'your-value'
+      }
+  )
 
   # Note for Erica of the future:
   # use request.files to get to uploaded file
