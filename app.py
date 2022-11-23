@@ -79,9 +79,13 @@ def score():
   # normalize the loaded json.
   the_json = normalize_json(b"".join(f.stream.readlines()))
 
+  checksum = sha1(the_json).hexdigest()
   client.put_object(
       Bucket=os.getenv('SPACES_BUCKET'),
-      Key=f"{sha1(the_json)}.json",
+      Key=f"{checksum}.json",
+      ContentType="application/json",
+      ChecksumAlgorithm='sha1',
+      ChecksumSha1=checksum,
       Body=the_json,
       ACL='private',
       Metadata={}
