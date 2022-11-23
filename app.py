@@ -1,5 +1,7 @@
 import json, os, boto3, botocore, re
 from hashlib import sha1
+from tempfile import TemporaryDirectory
+from invoke import run
 from flask import Flask, render_template, request, Response
 from werkzeug.utils import secure_filename
 
@@ -76,9 +78,18 @@ def score():
   # Upload the file
   f = request.files['json-file']
 
+  with TemporaryDirectory(f.filename) as d:
+      outfile = f'{d}/{f.filename}'
+      f.save(outfile)
+      f.seek(0) # reset cursor back to beginning after writing it out
+      output = run(
+          f"./sbom-scorecard score {outfile} --outputFormat json",
+          hide='out', # hide stdout
+          warn=True, # don't throw exceptions on error
+      )
+
   # normalize the loaded json.
   the_json = normalize_json(b"".join(f.stream.readlines()))
-
   checksum = sha1(the_json).hexdigest()
   client.put_object(
       Bucket=os.getenv('SPACES_BUCKET'),
@@ -95,7 +106,11 @@ def score():
   # use request.files to get to uploaded file
   # specifically, request.files('json-file')
 
-  score_data = json.loads(json_file)
+  if output.ok:
+    score_data = json.loads(output.stdout)
+  else:
+    # TODO: do some sort of error handling...
+    score_data = {}
 
   return render_template('scorecard.html', score_data=score_data, add_spaces_to_name=add_spaces_to_name)
   # return Response(json_file, mimetype='application/json')
