@@ -15,7 +15,7 @@
           {% for score_item, score_item_values in score_data.items() %}
           {# todo: pull total out of the loop #}
           <div class="flex justify-between items-center gap-5 py-4">
-            <h3 class="basis-40"> {{ add_spaces_to_name(score_item) }}</h3>
+            <h3 class="basis-44 font-bold"> {{ add_spaces_to_name(score_item) }}</h3>
             <div class="grow bg-gray-200 rounded-full h-2.5 dark:bg-gray-600">
               <div class="bg-indigo-600  h-2.5 rounded-full" style="width: {{ score_item_values['Ratio'] * 100 }}%"></div>
               {% if score_item_values['Reasoning'] %}
