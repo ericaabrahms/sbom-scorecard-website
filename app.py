@@ -92,16 +92,18 @@ def score():
   the_json = normalize_json(b"".join(f.stream.readlines()))
   checksum = sha1(the_json).hexdigest()
   print("pushing to spaces")
-  client.put_object(
-      Bucket=os.getenv('SPACES_BUCKET'),
-      Key=f"{checksum}.json",
-      ContentType="application/json",
-      ChecksumAlgorithm='sha1',
-      ChecksumSHA1=checksum,
-      Body=the_json,
-      ACL='private',
-      Metadata={}
-  )
+  # TODO: Openfeature?
+  if os.getenv("SKIP_UPLOAD") != "false":
+    client.put_object(
+        Bucket=os.getenv('SPACES_BUCKET'),
+        Key=f"{checksum}.json",
+        ContentType="application/json",
+        ChecksumAlgorithm='sha1',
+        ChecksumSHA1=checksum,
+        Body=the_json,
+        ACL='private',
+        Metadata={}
+    )
 
   # Note for Erica of the future:
   # use request.files to get to uploaded file
