@@ -112,7 +112,8 @@ def score():
     score_data = json.loads(output.stdout)
   else:
     # TODO: do some sort of error handling...
-    score_data = {}
+    # TODO: FIX THIS json file being loaded. That's wrong.
+    score_data = json.loads(json_file)
 
   return render_template('scorecard.html', score_data=score_data, add_spaces_to_name=add_spaces_to_name)
   # return Response(json_file, mimetype='application/json')
