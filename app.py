@@ -117,7 +117,12 @@ def score():
     # TODO: FIX THIS json file being loaded. That's wrong.
     score_data = json.loads(json_file)
 
-  return render_template('scorecard.html', score_data=score_data, add_spaces_to_name=add_spaces_to_name)
+  return render_template(
+    'scorecard.html',
+    score_data=score_data,
+    add_spaces_to_name=add_spaces_to_name,
+    json_data=json.dumps(json.loads(the_json), indent=4),
+  )
   # return Response(json_file, mimetype='application/json')
 
   # 1. Serve static files
