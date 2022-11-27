@@ -581,12 +581,16 @@ video {
   flex-grow: 1;
 }
 
-.basis-44 {
-  flex-basis: 11rem;
+.basis-40 {
+  flex-basis: 10rem;
 }
 
 .basis-16 {
   flex-basis: 4rem;
+}
+
+.basis-44 {
+  flex-basis: 11rem;
 }
 
 .grid-cols-12 {
