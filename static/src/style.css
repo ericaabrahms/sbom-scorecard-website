@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+h1, h2, .fancy-font {
+    font-family: 'Patua One', sans-serif;
+}
