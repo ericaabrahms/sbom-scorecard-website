@@ -114,8 +114,7 @@ def score():
     score_data = json.loads(output.stdout)
     status_code = 200
   else:
-    # TODO: do some sort of error handling...
-    # TODO: FIX THIS json file being loaded. That's wrong.
+    print("Error when running on file ", checksum)
     score_data = None
     status_code = 400
 
