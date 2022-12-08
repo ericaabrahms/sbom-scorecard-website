@@ -112,17 +112,19 @@ def score():
   print("outputting")
   if output.ok:
     score_data = json.loads(output.stdout)
+    status_code = 200
   else:
     # TODO: do some sort of error handling...
     # TODO: FIX THIS json file being loaded. That's wrong.
-    score_data = json.loads(json_file)
+    score_data = None
+    status_code = 400
 
   return render_template(
     'scorecard.html',
     score_data=score_data,
     add_spaces_to_name=add_spaces_to_name,
     json_data=json.dumps(json.loads(the_json), indent=4),
-  )
+  ), status_code
   # return Response(json_file, mimetype='application/json')
 
   # 1. Serve static files

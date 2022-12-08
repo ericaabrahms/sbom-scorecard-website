@@ -12,6 +12,8 @@
         <div class="rounded bg-white dark:bg-indigo-900 mt-20 p-4 text-gray-600 dark:text-gray-200">
           <h2 class="text-2xl font-bold text-center">Your scorecard</h2>
 
+          {% if score_data %}
+
           {% for score_item, score_item_values in score_data.items() %}
           {# todo: pull total out of the loop #}
           <div class="flex justify-between items-center gap-5 py-4">
@@ -25,6 +27,10 @@
             <p class="basis-16 text-right">{{ (score_item_values['Ratio'] * score_item_values['MaxPoints']) | round(10) | int}} / {{ score_item_values['MaxPoints'] }}</p>
           </div>
           {% endfor %}
+
+          {% else %}
+          <p class="py-4">It looks as though you might have uploaded a file which isn't a valid SBOM or isn't currently supported by sbom-scorecard. Feel free to submit a pull request at <a href="https://github.com/eBay/sbom-scorecard" class="dark:text-gray-200">https://github.com/eBay/sbom-scorecard</a>.</p>
+          {% endif %}
         </div>
       </div>
     </div>
