@@ -127,11 +127,3 @@ def score():
     add_spaces_to_name=add_spaces_to_name,
     json_data=json.dumps(json.loads(the_json), indent=4),
   ), status_code
-  # return Response(json_file, mimetype='application/json')
-
-  # 1. Serve static files
-  # 2. Fake JSON payload
-  # 3. ...make a website
-  # 4. make a database/s3 to store the uploaded files
-  # 5. deploy
-  # 6. Profit
