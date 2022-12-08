@@ -42,6 +42,9 @@ app = Flask(__name__)
 def hello_world():
   return render_template('hello.html')
 
+def add_spaces_to_name(name):
+    return re.sub( r"([A-Z])", r" \1", name)
+
 @app.post("/score")
 def score():
   json_file = '''{
@@ -76,9 +79,6 @@ def score():
     "MaxPoints": 100
   }
 }'''
-  def add_spaces_to_name(name):
-      return re.sub( r"([A-Z])", r" \1", name)
-
   f = request.files['json-file']
 
   log.debug("saving")
