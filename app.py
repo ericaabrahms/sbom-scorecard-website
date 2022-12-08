@@ -47,38 +47,6 @@ def add_spaces_to_name(name):
 
 @app.post("/score")
 def score():
-  json_file = '''{
-  "Compliance": {
-    "Ratio": 1,
-    "Reasoning": "",
-    "MaxPoints": 25
-  },
-  "PackageIdentification": {
-    "Ratio": 0,
-    "Reasoning": "0% have purls and 0% have CPEs",
-    "MaxPoints": 20
-  },
-  "PackageVersions": {
-    "Ratio": 0,
-    "Reasoning": "",
-    "MaxPoints": 20
-  },
-  "PackageLicenses": {
-    "Ratio": 1,
-    "Reasoning": "",
-    "MaxPoints": 20
-  },
-  "CreationInfo": {
-    "Ratio": 0,
-    "Reasoning": "No tool was used to create the sbom",
-    "MaxPoints": 15
-  },
-  "Total": {
-    "Ratio": 0.45,
-    "Reasoning": "",
-    "MaxPoints": 100
-  }
-}'''
   f = request.files['json-file']
 
   log.debug("saving")
@@ -96,7 +64,7 @@ def score():
   the_json = normalize_json(b"".join(f.stream.readlines()))
   checksum = sha1(the_json).hexdigest()
   # TODO: Openfeature?
-  if os.getenv("SKIP_UPLOAD") != "false":
+  if os.getenv("SKIP_UPLOAD", "false") != "true":
     log.info("pushing %s to spaces", checksum)
     client.put_object(
         Bucket=os.getenv('SPACES_BUCKET'),
