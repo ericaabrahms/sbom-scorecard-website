@@ -1,50 +1,39 @@
-<html>
-  <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patua+One">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
-  </head>
-  <body class="bg-gradient-to-br from-indigo-700 to-fuchsia-400 min-h-screen">
-    <header class="bg-indigo-900 py-3 grid grid-cols-12">
-      <h1 class="text-white text-3xl col-span-10 col-start-2 text-center">SBOM Scorecard</h1>
-    </header>
-    <div class="grid grid-cols-12">
-      <div class="col-span-6 col-start-4">
-        <div class="rounded bg-white dark:bg-indigo-900 mt-20 p-4 text-gray-600 dark:text-gray-200">
-          <h2 class="text-2xl font-bold text-center">Your scorecard</h2>
+{% extends "base.html" %}
+{% block content %}
+<div class="col-span-6 col-start-4">
+  <div class="rounded bg-white dark:bg-indigo-900 mt-20 p-4 text-gray-600 dark:text-gray-200">
+    <h2 class="text-2xl font-bold text-center">Your scorecard</h2>
 
-          {% if score_data %}
+    {% if score_data %}
 
-          {% for score_item, score_item_values in score_data.items() %}
-          {# todo: pull total out of the loop #}
-          <div class="flex justify-between items-center gap-5 py-4">
-            <h3 class="basis-44 font-bold"> {{ add_spaces_to_name(score_item) }}</h3>
-            <div class="grow bg-gray-200 rounded-full h-2.5 dark:bg-gray-600">
-              <div class="bg-indigo-600  h-2.5 rounded-full" style="width: {{ score_item_values['Ratio'] * 100 }}%"></div>
-              {% if score_item_values['Reasoning'] %}
-              <p class="text-center text-gray-600 dark:text-gray-400">({{score_item_values['Reasoning']}})</p>
-              {% endif %}
-            </div>
-            <p class="basis-16 text-right">{{ (score_item_values['Ratio'] * score_item_values['MaxPoints']) | round(10) | int}} / {{ score_item_values['MaxPoints'] }}</p>
-          </div>
-          {% endfor %}
-
-          {% else %}
-          <p class="py-4">It looks as though you might have uploaded a file which isn't a valid SBOM or isn't currently supported by sbom-scorecard. Feel free to submit a pull request at <a href="https://github.com/eBay/sbom-scorecard" class="dark:text-gray-200">https://github.com/eBay/sbom-scorecard</a>.</p>
-          {% endif %}
-        </div>
+    {% for score_item, score_item_values in score_data.items() %}
+    {# todo: pull total out of the loop #}
+    <div class="flex justify-between items-center gap-5 py-4">
+      <h3 class="basis-44 font-bold"> {{ add_spaces_to_name(score_item) }}</h3>
+      <div class="grow bg-gray-200 rounded-full h-2.5 dark:bg-gray-600">
+        <div class="bg-indigo-600  h-2.5 rounded-full" style="width: {{ score_item_values['Ratio'] * 100 }}%"></div>
+        {% if score_item_values['Reasoning'] %}
+        <p class="text-center text-gray-600 dark:text-gray-400">({{score_item_values['Reasoning']}})</p>
+        {% endif %}
       </div>
+      <p class="basis-16 text-right">{{ (score_item_values['Ratio'] * score_item_values['MaxPoints']) | round(10) | int}} / {{ score_item_values['MaxPoints'] }}</p>
     </div>
+    {% endfor %}
 
-    <div class="grid grid-cols-12">
-      <div class="col-span-8 col-start-3">
+    {% else %}
+    <p class="py-4">It looks as though you might have uploaded a file which isn't a valid SBOM or isn't currently supported by sbom-scorecard. Feel free to submit a pull request at <a href="https://github.com/eBay/sbom-scorecard" class="dark:text-gray-200">https://github.com/eBay/sbom-scorecard</a>.</p>
+    {% endif %}
+  </div>
+</div>
 
-        <div class="rounded bg-white dark:bg-indigo-900 mt-20 p-4 text-gray-600 dark:text-gray-200">
-          <h2 class="text-2xl font-bold text-center">The JSON you uploaded</h2>
-          {# TODO: Truncate this somehow for massive files? #}
-          <pre>{{ json_data }}</pre>
-        </div>
+<div class="col-span-8 col-start-3">
 
-      </div>
-    </div>
-  </body>
-</html>
+  <div class="rounded bg-white dark:bg-indigo-900 mt-20 p-4 text-gray-600 dark:text-gray-200">
+    <h2 class="text-2xl font-bold text-center">The JSON you uploaded</h2>
+    {# TODO: Truncate this somehow for massive files? #}
+    <pre>{{ json_data }}</pre>
+  </div>
+
+</div>
+
+{% endblock %}
