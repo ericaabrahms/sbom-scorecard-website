@@ -6,7 +6,8 @@ from flask import Flask, render_template, request, Response
 from werkzeug.utils import secure_filename
 import logging
 
-log = logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger()
 
 
 UPLOAD_FOLDER = '../temp_files'
@@ -94,9 +95,9 @@ def score():
 
   the_json = normalize_json(b"".join(f.stream.readlines()))
   checksum = sha1(the_json).hexdigest()
-  log.debug("pushing %s to spaces", checksum)
   # TODO: Openfeature?
   if os.getenv("SKIP_UPLOAD") != "false":
+    log.info("pushing %s to spaces", checksum)
     client.put_object(
         Bucket=os.getenv('SPACES_BUCKET'),
         Key=f"{checksum}.json",
@@ -117,7 +118,7 @@ def score():
     score_data = json.loads(output.stdout)
     status_code = 200
   else:
-    log.error("Error when running on file %s", checksum)
+    log.warning("Error when running on file %s", checksum)
     score_data = None
     status_code = 400
 
