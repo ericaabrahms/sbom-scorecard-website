@@ -50,6 +50,13 @@ def score():
   f = request.files['json-file']
 
   log.debug("saving")
+  if f.filename == '':
+        status_code = 400
+        return render_template(
+            'scorecard.html',
+        ), status_code
+
+
   with TemporaryDirectory(f.filename) as d:
       outfile = f'{d}/{f.filename}'
       f.save(outfile)
