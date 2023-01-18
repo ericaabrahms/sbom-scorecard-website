@@ -4,7 +4,7 @@ WORKDIR /srv/sbom-scorecard-website/
 COPY . .
 
 
-RUN curl -Lo ./sbom-scorecard https://github.com/eBay/sbom-scorecard/releases/download/0.0.3/sbom-scorecard-linux-amd64
+RUN curl -Lo ./sbom-scorecard https://github.com/eBay/sbom-scorecard/releases/download/0.0.5/sbom-scorecard-linux-amd64
 RUN chmod +x ./sbom-scorecard
 RUN pip install pipenv
 RUN pipenv install --system --deploy
