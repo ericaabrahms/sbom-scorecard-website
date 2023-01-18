@@ -7,15 +7,8 @@
         This website allows you to upload a software bill of materials (SBOM) and get a grade. The grade is based on how complete the information is. This is based entirely on the <a href="https://github.com/eBay/sbom-scorecard">sbom-scorecard</a> tool.
       </p>
     </div>
-    <form class="w-full  mt-20" method="POST" action="/score" enctype="multipart/form-data">
-      <label class="block text-gray-600 text-2xl font-bold mb-5" for="file-upload">Upload your SBOM JSON file</label>
-      <div class="flex justify-between">
-        <input id="file-upload" name="json-file" type="file" accept="application/json"/>
-        <button class="shadow bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
-          Score Me!
-        </button>
-      </div>
-    </form>
+    {% include "partials/form.html" %}
+
   </div>
 </div>
 {% endblock %}
