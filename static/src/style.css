@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-white a {
+  color: rgb(20 83 45 / var(--tw-bg-opacity));
+  text-decoration: underline;
+}
+
+@media (prefers-color-scheme: dark) {
+  .bg-white a {
+    color: rgb(74 222 128 / var(--tw-bg-opacity))
+  }
+}
+
+
 h1, h2, .fancy-font {
     font-family: 'Patua One', sans-serif;
+}
+
+pre {
+  white-space: pre-wrap;
 }
