@@ -5,6 +5,7 @@ from invoke import run
 from flask import Flask, render_template, request, Response
 from werkzeug.utils import secure_filename
 import logging
+import xml.dom.minidom
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger()
@@ -56,11 +57,35 @@ def score():
             'scorecard.html',
         ), status_code
 
+  if f.mimetype == 'text/xml':
+      payload = b"".join(f.stream.readlines())
+      dom = xml.dom.minidom.parseString(payload)
+      pretty_payload = dom.toprettyxml()
+
+  elif f.mimetype == 'application/json':
+      payload = normalize_json(b"".join(f.stream.readlines()))
+      pretty_payload = json.dumps(json.loads(payload), indent=4)
+  checksum = sha1(payload).hexdigest()
+  f.seek(0) # reset cursor back to beginning after reading it out
+
+  # TODO: Openfeature?
+
+  if os.getenv("SKIP_UPLOAD", "false") != "true":
+    log.info("pushing %s to spaces", checksum)
+    client.put_object(
+        Bucket=os.getenv('SPACES_BUCKET'),
+        Key=f"{checksum}.json",
+        ContentType=f.mimetype,
+        ChecksumAlgorithm='sha1',
+        ChecksumSHA1=checksum,
+        Body=payload,
+        ACL='private',
+        Metadata={}
+    )
 
   with TemporaryDirectory(f.filename) as d:
       outfile = f'{d}/{f.filename}'
       f.save(outfile)
-      f.seek(0) # reset cursor back to beginning after writing it out
       log.debug("running cmd")
       output = run(
           f"./sbom-scorecard score {outfile} --outputFormat json",
@@ -68,21 +93,6 @@ def score():
           warn=True, # don't throw exceptions on error
       )
 
-  the_json = normalize_json(b"".join(f.stream.readlines()))
-  checksum = sha1(the_json).hexdigest()
-  # TODO: Openfeature?
-  if os.getenv("SKIP_UPLOAD", "false") != "true":
-    log.info("pushing %s to spaces", checksum)
-    client.put_object(
-        Bucket=os.getenv('SPACES_BUCKET'),
-        Key=f"{checksum}.json",
-        ContentType="application/json",
-        ChecksumAlgorithm='sha1',
-        ChecksumSHA1=checksum,
-        Body=the_json,
-        ACL='private',
-        Metadata={}
-    )
 
   # Note for Erica of the future:
   # use request.files to get to uploaded file
@@ -90,6 +100,8 @@ def score():
 
   log.debug("outputting")
   if output.ok:
+    print(output.stdout)
+    print(output.stderr)
     score_data = json.loads(output.stdout)
     status_code = 200
   else:
@@ -101,5 +113,5 @@ def score():
     'scorecard.html',
     score_data=score_data,
     add_spaces_to_name=add_spaces_to_name,
-    json_data=json.dumps(json.loads(the_json), indent=4),
+    json_data=pretty_payload,
   ), status_code
