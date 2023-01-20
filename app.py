@@ -60,6 +60,8 @@ def score():
   if f.mimetype == 'text/xml':
       payload = b"".join(f.stream.readlines())
       dom = xml.dom.minidom.parseString(payload)
+      # not the most space efficient, but it's at least normalized.
+      payload = dom.toprettyxml()
       pretty_payload = dom.toprettyxml()
 
   elif f.mimetype == 'application/json':
