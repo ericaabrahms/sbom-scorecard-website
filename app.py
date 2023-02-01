@@ -67,6 +67,9 @@ def score():
   elif f.mimetype == 'application/json':
       payload = normalize_json(b"".join(f.stream.readlines()))
       pretty_payload = json.dumps(json.loads(payload), indent=4)
+  else:
+      pretty_payload = payload = b"".join(f.stream.readlines())
+
   checksum = sha1(payload).hexdigest()
   f.seek(0) # reset cursor back to beginning after reading it out
 
