@@ -56,7 +56,7 @@ def score():
         return render_template(
             'scorecard.html',
         ), status_code
-  raw_payload = b"".join(f.stream.readlines())
+  raw_payload = b"".join(f.stream.readlines()).decode('utf-8')
   try:
     if f.mimetype == 'text/xml':
         dom = xml.dom.minidom.parseString(raw_payload)
