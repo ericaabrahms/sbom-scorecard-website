@@ -7,6 +7,7 @@
     {% if score_data %}
 
     {% for score_item, score_item_values in score_data.items() %}
+    {% if score_item != "Metadata" %}
     {# todo: pull total out of the loop #}
     <div class="flex justify-between items-center gap-5 py-4">
       <h3 class="basis-44 font-bold"> {{ add_spaces_to_name(score_item) }}</h3>
@@ -18,6 +19,7 @@
       </div>
       <p class="basis-16 text-right">{{ (score_item_values['Ratio'] * score_item_values['MaxPoints']) | round(10) | int}} / {{ score_item_values['MaxPoints'] }}</p>
     </div>
+    {% endif %}
     {% endfor %}
 
     {% else %}
