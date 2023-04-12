@@ -61,7 +61,7 @@ def score():
     if f.mimetype == 'text/xml':
         dom = xml.dom.minidom.parseString(raw_payload)
         # not the most space efficient, but it's at least normalized.
-        payload = dom.toprettyxml()
+        payload = dom.toprettyxml().encode('utf-8')
         pretty_payload = dom.toprettyxml()
 
     elif f.mimetype == 'application/json':
