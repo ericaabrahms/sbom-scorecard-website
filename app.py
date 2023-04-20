@@ -47,7 +47,6 @@ def pretty_and_normalized(raw: str) -> (str, str):
         normalized = dom.toprettyxml().encode('utf-8')
         pretty_payload = dom.toprettyxml()
     except:
-        import pdb; pdb.set_trace()
         pretty_payload = normalized = raw
 
     return pretty_payload, normalized
@@ -112,7 +111,6 @@ def score():
   raw_payload = b"".join(f.stream.readlines()).decode('utf-8')
   pretty_payload, payload = pretty_and_normalized(raw_payload)
   checksum = sha1(payload).hexdigest()
-  import pdb; pdb.set_trace()
 
   f.seek(0) # reset cursor back to beginning after reading it out
 
